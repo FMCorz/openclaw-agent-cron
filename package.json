@@ -1,0 +1,14 @@
+{
+  "name": "@openclaw/agent-cron",
+  "private": true,
+  "description": "Agent-scoped cron tool: list, add, remove, run cron jobs for this agent only.",
+  "type": "module",
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "dependencies": {
+    "@sinclair/typebox": "0.34.48"
+  }
+}
