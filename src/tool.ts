@@ -115,33 +115,7 @@ export function createScheduleTool(ctx: OpenClawPluginToolContext) {
   const tool = {
     name: "agent-cron",
     label: "Agent cron",
-    description: `Manage one-off and scheduled tasks (tasks, reminders, jobs, cron) for this agent. Use this for general reminders and tasks when the 'cron' tool is not available.
-
-ACTIONS:
-- list: List jobs for this agent. Use includeDisabled: true to include disabled jobs.
-- add: Create a one-off or recurring job. Requires job with name, schedule, and message. Delivery target is inferred from the current chat (channel/to) when available; otherwise announce with no target.
-- remove: Delete a job by jobId. Only jobs belonging to this agent can be removed.
-- run: Run a job immediately by jobId (for testing). Only jobs belonging to this agent can be run.
-
-JOB (for add action):
-{
-  "name": "<string, required>",
-  "schedule": { ... },   // Required, see below
-  "message": "<string, required>"   // Instruction to this agent when the job runs
-}
-
-Write "message" as instructions to yourself (the agent). For reminders, clearly ask yourself to reply to the end-user with the reminder text so it can be announced, not to explain scheduling details. Any output from the task will be delivered to the end-user.
-Examples:
-- "Respond to the user with: Reminder: time to stand up and stretch."
-- "Tell the user: Reminder: join the daily standup meeting now."
-
-SCHEDULE (job.schedule):
-- "at": Run once at a specific time
-  { "kind": "at", "at": "<ISO-8601 timestamp>" }
-- "every": Run on an interval (milliseconds)
-  { "kind": "every", "every": <interval-ms> }
-- "cron": Run on a cron expression
-  { "kind": "cron", "cron": "<cron-expression>", "tz": "<optional-timezone>" }`,
+    description: `Manage one-off and scheduled tasks (reminders, jobs, cron, tasks) for this agent. Use this when the \`cron\` tool is not available. Read the \`agent-cron\` skill to learn how to use this tool.`,
     parameters: ScheduleToolSchema,
     execute: async (_toolCallId: string, args: Record<string, unknown>) => {
       if (!ctx.agentId?.trim()) {
