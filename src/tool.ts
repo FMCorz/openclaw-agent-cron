@@ -81,6 +81,9 @@ function inferDeliveryFromSessionKey(sessionKey: string | undefined): CronDelive
   };
 
   const { deliveryContext, threadId } = extractDeliveryInfo(raw);
+  if (!deliveryContext) {
+    return null;
+  }
   const channel = deliveryContext.channel?.trim().toLowerCase();
   let to = deliveryContext.to?.trim();
   if (channel === "telegram" && threadId && to && !to.includes(":topic:")) {
@@ -99,7 +102,7 @@ function inferDeliveryFromSessionKey(sessionKey: string | undefined): CronDelive
 }
 
 function isJobForAgent(job: CronJob, agentId: string): boolean {
-  return job.agentId && job.agentId === agentId;
+  return Boolean(job.agentId) && job.agentId === agentId;
 }
 
 async function listJobsForAgent(
@@ -140,7 +143,12 @@ export function createScheduleTool(ctx: OpenClawPluginToolContext) {
           agentId,
         );
         return {
-          content: [{ type: "text", text: JSON.stringify({ jobs, total: jobs.length }, null, 2) }],
+          content: [
+            {
+              type: "text" as const,
+              text: JSON.stringify({ jobs, total: jobs.length }, null, 2),
+            },
+          ],
           details: { status: "ok" },
         };
       }
@@ -204,7 +212,7 @@ export function createScheduleTool(ctx: OpenClawPluginToolContext) {
 
         const added = (await callGatewayTool("cron.add", gatewayOpts, jobCreate)) as CronJob;
         return {
-          content: [{ type: "text", text: JSON.stringify(added, null, 2) }],
+          content: [{ type: "text" as const, text: JSON.stringify(added, null, 2) }],
           details: { status: "ok" },
         };
       }
@@ -228,7 +236,7 @@ export function createScheduleTool(ctx: OpenClawPluginToolContext) {
       if (action === "remove") {
         await callGatewayTool("cron.remove", gatewayOpts, { id });
         return {
-          content: [{ type: "text", text: JSON.stringify({ removed: id }, null, 2) }],
+          content: [{ type: "text" as const, text: JSON.stringify({ removed: id }, null, 2) }],
           details: { status: "ok" },
         };
       }
@@ -236,7 +244,7 @@ export function createScheduleTool(ctx: OpenClawPluginToolContext) {
       if (action === "run") {
         const result = await callGatewayTool("cron.run", gatewayOpts, { id, mode: "force" });
         return {
-          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+          content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
           details: { status: "ok" },
         };
       }
