@@ -1,6 +1,6 @@
 ---
 name: agent-cron
-description: Manage one-off and scheduled tasks (reminders, jobs, cron, tasks) for this agent. This skill describes how to use the `agent-cron` tool. Use this when the `cron` tool is unavailable.
+description: Manage one-off and scheduled tasks (reminders, jobs, cron, tasks) for this agent. This skill describes how to use the `agent-cron` tool. Use this when the `cron` tool is unavailable. Only read when you intend to schedule a cron.
 ---
 
 _This skill describes the `agent-cron` tool._
