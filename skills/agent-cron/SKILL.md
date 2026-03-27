@@ -35,16 +35,7 @@ The `agent-cron` tool is a replacement for the `cron` tool (shipped with OpenCla
 
 ```json
 { "kind": "at", "at": "<ISO-8601 timestamp>" }
-```
-**at**: To run once after a specific duration
-
-```json
-{ "kind": "at", "at": "<number><s|m|h|d>" }
-{ "kind": "at", "at": "30s" } // After 30 seconds.
-{ "kind": "at", "at": "10m" } // After 10 minutes.
-{ "kind": "at", "at": "2h" } // After 2 hours.
-{ "kind": "at", "at": "1d" } // After 1 day.
-```
+{ "kind": "at", "at": "<ISO-8601 timestamp>", "tz": "<optional-timezone>" }
 
 **every**": Run on an interval (milliseconds)
 
@@ -60,9 +51,9 @@ The `agent-cron` tool is a replacement for the `cron` tool (shipped with OpenCla
 
 ### Job message
 
-The job's `message` is a message containing the instructions to yourself, the agent. Write it carefully. Instruct yourself what to do. Anything the agent will output will be delivered to the user.
+The job's `message` is a message containing the instructions to yourself, the agent. Write it carefully. Instruct yourself what to do. The agent's output will be delivered to the user.
 
-When the user asks to be notified here or there, ignore those instructions completely and write the message so that the response to the user is the output from the agent.
+When the user asks to be notified here or there, IGNORE those instructions completely and write the message so that the response to the user is the output from the agent. DO NOT instruct yourself to send the message.
 
 Examples:
 
